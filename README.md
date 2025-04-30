@@ -10,14 +10,9 @@ Classifying Coffee powder brands using MPLAB Machine Learning Development Suite.
 This repository is a companion to the [Gas Sensor Data Logger Firmware](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MPLAB-ML-Gesture-Demo&redirect=true). It contains the firmware to classify a different brands of coffee on a PIC32BZ- WBZ451 and Bosch BME688 Gas Sensor[Bosch BME688 Gas Sensor](https://www.microchip.com/developmenttools/ProductDetails/EV45Y33A)
 ([Mikroe IMU2 click board](https://www.mikroe.com/6dof-imu-2-click)) or the [TDK ICM42688 IMU](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/EV18H79A) ([Mikroe IMU14 click board](https://www.mikroe.com/6dof-imu-14-click)).
 
-The supported gestures (shown in the video above) are:
+The target is to classify the coffee brand based on the pressure, temperature, Humidity, and Gas(current) signals from the BME688 Gas sensor. In this project, our main signals of interest are the Humidity and Gas signals from the container in which coffee has been stored. 
 
-- *Figure Eight*
-- *Up-down*
-- *Wave*
-- *Wheel*
-
-In addition there is also an 'unknown' class for gesture-like movement and an 'idle' class for low motion activity.
+In addition, there is also an 'unknown' class for a signals that are different than what we have classes for.
 
 ## Continuous Gestures Dataset
 
