@@ -12,7 +12,7 @@ This repository is a companion to the [Gas Sensor Data Logger Firmware](https://
 
 The target is to classify the coffee brand based on the pressure, temperature, Humidity, and Gas(current) signals from the BME688 Gas sensor. In this project, our main signals of interest are the Humidity and Gas signals from the container in which coffee has been stored. 
 
-In addition, there is also an 'unknown' class for a signals that are different than what we have classes for.
+In addition, there is also an 'unknown' class for signals that are different than what we have classes for.
 
 ## Continuous Gestures Dataset
 
@@ -25,8 +25,8 @@ In addition to the target gestures, some additional gestures - *triangle*, *forw
 Furthermore, the *idle* class data consists of scenarios where the device is fully at rest in different orientations, and other scenarios with small motion activity that included fidgeting with the board (manipulating the board randomly with the fingers) and pacing around the room while holding the board.
 
 ## Hardware Used
-* SAMD21 Machine Learning Evaluation Kit with Bosch BMI160 IMU [(EV45Y33A)](https://www.microchip.com/developmenttools/ProductDetails/EV45Y33A)
-* SAMD21 Machine Learning Evaluation Kit with TDK ICM42688 IMU [(EV18H79A)](https://www.microchip.com/developmenttools/ProductDetails/EV18H79A)
+* PIC32CX-BZ2 and WBZ451 Curiosity Development Board[(EV45Y33A)](https://www.microchip.com/developmenttools/ProductDetails/EV45Y33A)
+* PIC32CX-BZ2 and WBZ451 Curiosity Development Board and Bosch BME688 4-in-1 Gas Sensor [(EV18H79A)](https://www.microchip.com/developmenttools/ProductDetails/EV18H79A)
 
 ## Software Used
 * [MPLAB® X IDE](https://microchip.com/mplab/mplab-x-ide)
