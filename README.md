@@ -1,108 +1,85 @@
-# ml-Coffee-Powder-Classification-GasSensor
-Classifying Coffee powder brands using MPLAB Machine Learning Development Suite.  
-![https://www.microchip.com/](assets/microchip.png)![https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MPLAB-ML-Documentation&redirect=true](assets/MPLAB-MachineLearning.png)
-
-| ![Deployed gesture recognizer](assets/gestures-with-dashboard.gif) |
-| :--: |
-| Deployed gesture recognizer |
-
-## Repository Overview
-This repository is a companion to the [Gas Sensor Data Logger Firmware](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MPLAB-ML-Gesture-Demo&redirect=true). It contains the firmware to classify a different brands of coffee on a PIC32BZ- WBZ451 and Bosch BME688 Gas Sensor[Bosch BME688 Gas Sensor](https://www.microchip.com/developmenttools/ProductDetails/EV45Y33A)
-([Mikroe IMU2 click board](https://www.mikroe.com/6dof-imu-2-click)) or the [TDK ICM42688 IMU](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/EV18H79A) ([Mikroe IMU14 click board](https://www.mikroe.com/6dof-imu-14-click)).
-
-The target is to classify the coffee brand based on the pressure, temperature, Humidity, and Gas(current) signals from the BME688 Gas sensor. In this project, our main signals of interest are the Humidity and Gas signals from the container in which coffee has been stored. 
-
-In addition, there is also an 'unknown' class for signals that are different than what we have classes for.
-
-## Continuous Gestures Dataset
-
-The [gestures dataset](https://github.com/MicrochipTech/ml-samd21-iot-mplabml-gestures-demo/tree/main/dataset/) was collected by Microchip employees and consists of two test subjects performing the continuous gestures as described in the section above with a [SAMD21 BMI160 evaluation board](https://www.microchip.com/developmenttools/ProductDetails/EV45Y33A). The dataset includes a collection of 10 second long samples in CSV format (ax,ay,az,gx,gy,gz format) split into training and test folds. CSV files are named according to the following template:
-
-``<class>-<participant-id>-<extra-metadata>-<collection-date-yymmdd>-<sample-number>.csv``
-
-In addition to the target gestures, some additional gestures - *triangle*, *forward wheel*, the letter *V*, and others - were collected to make up the *unknown* gestures class, which is used to help improve and validate the models discriminatory ability.
-
-Furthermore, the *idle* class data consists of scenarios where the device is fully at rest in different orientations, and other scenarios with small motion activity that included fidgeting with the board (manipulating the board randomly with the fingers) and pacing around the room while holding the board.
-
-## Hardware Used
-* PIC32CX-BZ2 and WBZ451 Curiosity Development Board[(EV45Y33A)](https://www.microchip.com/developmenttools/ProductDetails/EV45Y33A)
-* PIC32CX-BZ2 and WBZ451 Curiosity Development Board and Bosch BME688 4-in-1 Gas Sensor [(EV18H79A)](https://www.microchip.com/developmenttools/ProductDetails/EV18H79A)
-
-## Software Used
-* [MPLAB® X IDE](https://microchip.com/mplab/mplab-x-ide)
-* [MPLAB® XC32 Compiler](https://microchip.com/mplab/compilers)
-* [MPLAB® Harmony 3](https://www.microchip.com/harmony)
-* [MPLAB® ML Model Builder](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MPLAB-ML-Documentation&redirect=true)
-
-## Related Documentation
-* ATSAMD21G18 [Product Family Page](https://www.microchip.com/wwwproducts/en/ATSAMD21G18)
-* SAM-IoT WG Development Board [Product Details](https://www.microchip.com/developmenttools/ProductDetails/EV75S95A)
-* MikroElektronika IMU Click Boards
-   * [6DOF IMU 2 Click](https://www.mikroe.com/6dof-imu-2-click)
-   * [6DOF IMU 14 Click](https://www.mikroe.com/6dof-imu-14-click)
-
-# Firmware Operation
-The firmware behavior can be summarized as operating in one of three distinct states as reflected by the onboard LEDs and described in the table below:
-
-| State |	LED Behavior |	Description |
-| --- | --- | --- |
-| Error |	Red (ERROR) LED lit |	Fatal error. (Do you have the correct sensor plugged in?). |
-| Buffer Overflow |	Yellow (DATA) and Red (ERROR) LED lit for 5 seconds	| Processing is not able to keep up with real-time; data buffer has been reset. |
-| Running | Yellow (DATA) LED flashing slowly |	Firmware is running normally. |
-
-In addition, the firmware also prints the classification output for each inference over the UART port. To view a visualization of the classification output, load the Data Visualizer Work Space file [gestures-demo-dashboard.dvws](https://github.com/MicrochipTech/ml-samd21-iot-mplabml-gestures-demo/tree/main/data-visualizer/) in MPLAB Data Visualizer and connect to the COM port of the SAMD21 kit with the following settings:
-
-- Baudrate 115200
-- Data bits 8
-- Stop bits 1
-- Parity None
-
-| ![Terminal output](assets/gestures-dv-dashboard.png) |
-| :--: |
-| Gesture classification dashboard in MPLAB Data Visualizer |
-
-Note the firmware class ID mapping is as below:
-
-- *Unknown* - 0 (input outside of modeled behavior)
-- *Figure Eight* - 1
-- *Idle* - 2
-- *Unknown Gesture* - 3 (unknown gesture-like behavior)
-- *Up-down* - 4
-- *Wave* - 5
-- *Wheel* - 6
-
-## Performing Gestures
-Gestures should be performed in a way that feels natural, using a thumb and index finger grip around the SAMD21 board as shown in the image below. The top of the board should be facing away from the user, with the USB connector oriented towards the ground.
-
-| ![Thumb and index finger grip](assets/thumb-forefinger-grip.jpg) |
-| :--: |
-| Thumb and index finger grip |
-
-The supported gestures are listed below (described from user's point of view):
-
-- Figure Eight - Move the board in a figure eight pattern, starting the gesture from the top of the eight and going left (counterclockwise) at a slow to moderate speed
-- Up-down - Move board up and down continuously at a moderate speed
-- Wave - Wave the board side to side at a moderate speed as if you were greeting someone
-- Wheel - Move the board in a clockwise circle (or wheel) continuously, at a moderate speed
-
-Also see the GIF at the top of this document for further reference.
-
-## Firmware Benchmark
-Measured with the ICM42688 sensor configuration, ``-O2`` level compiler optimizations, and 48MHz clock
-- 38.2kB Flash
-- 9.1kB RAM
-- 16ms Inference time
-
-## Classifier Performance
-Below is the confusion matrix for the test dataset. Note that the classes are highly imbalanced so accuracy is not a good indicator of overall performance.
-
-![Test set confusion matrix](assets/confusion-matrix.png)
-
-# Sensor Configuration
-Binary builds of the data logging firmware used in the data collection for this project can be found in the [binaries](https://github.com/MicrochipTech/ml-samd21-iot-mplabml-gestures-demo/tree/main/binaries) folder of this repo; see the [ml-samd21-iot-imu-data-logger](https://github.com/MicrochipTech/ml-samd21-iot-imu-data-logger) repository to build data logging firmware with different sensor configurations.
-
-Sensor configuration values used in the data collection are summarized in the table below.
-
-| IMU Sensor | Axes | Sampling Rate | Accelerometer Range | Gyrometer Range |
-| --- | --- | --- | --- | --- |
-| Bosch BMI160 | Ax, Ay, Az, Gx, Gy, Gz | 100Hz | 16G | 2000DPS |
+# ml-Coffee-Powder-Classification-GasSensorSmelling the Future of Embedded AI
+What if your coffee machine could sniff out whether you’re brewing a bold French roast, a fruity Ethiopian blend , —or even a counterfeit coffee bean? With machine learning (ML), advanced sensors, and Microchip's low-power embedded platforms, this futuristic idea is already brewing.
+We built a working prototype using the PIC32CX-BZ451 microcontroller and the Bosch BME688 gas sensor, all powered by the MPLAB® Machine Learning Development Suite. The result? A fully embedded, wireless-capable system that can classify coffee aromas in real time, —even flagging imposters.
+________________________________________
+A Fun Project with Serious Implications
+While this started as a hobby project to identify coffee types based on aroma, the same technology translates directly to real-world needs in:
+•	Food and beverage authenticity
+•	Pharmaceutical and luxury goods tamper detection
+•	Supply chain integrity
+•	Air quality monitoring
+•	Predictive maintenance
+If a product emits a signature gas, we can detect it, —with tiny, ultra-efficient ML models running entirely on-device.
+________________________________________
+Hardware at the Heart
+This project runs on a compact yet powerful Microchip solution, ideal for edge AI and remote sensing:
+Microchip PIC32CX-BZ451
+•	Arm® Cortex®-M4F core with wireless connectivity (Bluetooth LE and Zigbee)
+•	Low power design, perfect for IoT and always-on sensing
+•	Adequate RAM/Flash for small ML models
+•	Fully integrated with the MPLAB ML Development Suite for seamless training and deployment
+Bosch BME688 4-in-1 Environmental Sensor
+•	Detects VOCs/VSCs, and others via gas resistance (ideal for aroma classification)
+•	Also measures humidity, temperature, and pressure
+•	Low power, small form factor—ideal for compact embedded applications
+For this use case, temperature and pressure were discarded, as they remained nearly constant and provided low classification value.
+We focused on:
+•	Gas resistance
+•	Humidity
+These features gave us excellent separation between different coffee types—and even between authentic and knockoff beans.
+________________________________________
+Building the Machine Learning Model
+We used the MPLAB® Machine Learning Development Suite to build, evaluate, and deploy our model. No manual coding or tuning was required, thanks to a fully integrated AutoML pipeline.
+Step-by-step workflow:
+1.	Data Collection
+Brewed several types of coffee (and a few “fake” samples), while logging VOCs and humidity.
+2.	Feature Selection
+Focused only on humidity and gas resistance, due to their high variability and signal quality.
+3.	Signal Analysis
+Verified stability, repeatability, and separation for the chosen inputs.
+4.	AutoML Pipeline
+o	Used the GUI to train and compare models automatically
+o	No need for ML expertise- —just select and evaluate
+o	Split data into training, validation, and test sets
+o	Fast iterations and visual feedback made tuning simple
+5.	Deployment
+The final trained model was exported directly into optimized C code and compiled into the PIC32CX-BZ451 firmware.
+Final Model Stats:
+•	Inference Time: <0.300 ms
+•	Model Size: <1500 B
+•	Stack Usage: ~1200 B
+•	Classification Accuracy: >99% on test samples
+•	Deployment Footprint: Minimal memory and power overhead
+________________________________________
+Low Power by Design
+Microchip’s Our wireless MCUs like the PIC32CX-BZ451 are engineered for industry-leading low power consumption, making them ideal for:
+•	Portable gas detection
+•	Battery-powered IoT nodes
+•	Always-on, event-driven classification
+Power-saving features include:
+•	Sleep modes with fast wake-up
+•	Peripheral-level clock gating
+•	Efficient radio and MCU coordination
+•	Smart event system and DMA
+This ensures long battery life without sacrificing performance, —essential for embedded sensing in remote or mobile environments.
+________________________________________
+Real-World Use Cases Beyond Coffee
+The possibilities go far beyond the coffee pot:
+•	Spoilage Detection – Monitor freshness of meat, produce, or dairy
+•	Tamper Detection – Flag abnormal chemical signatures in sealed packages
+•	Air Quality Sensing – Detect harmful VOCs in homes, factories, or vehicles
+•	Material Authentication – Identify “fake” goods via subtle aroma profiles
+•	Wearable Safety Devices – Alert users to gas leaks or poor ventilation
+All are possible using low-cost sensors, a Microchip MCU, and compact ML models that don’t require internet or the cloud.
+________________________________________
+Built to Last: Microchip Support and Longevity
+At Microchip, we stand behind your product from concept through long-term deployment:
+•	Customer-Driven Obsolescence Policy – Your designs stay viable for decades
+•	Extensive Documentation and Tools – Helping your teams move fast and build smart
+•	Global Field Support and Training – We're with you every step of the way
+Whether you’re building an experimental prototype or a commercial solution, our ecosystem is designed to scale with you.
+________________________________________
+A Smarter Cup—and a Smarter Platform
+This coffee detection project shows what’s possible when embedded ML meets great hardware and tools. Using the PIC32CX-BZ451, the Bosch BME688, and MPLAB Machine Learning Development Suite, we created a fun, powerful example of intelligence at the edge, —without heavy code, cloud processing, or large footprints.
+From detecting fake beans to authenticating goods, this solution demonstrates how even “just for fun” projects can lead to real-world innovation.
+For more information about implementing AI and Machine Learning models into your edge device, please visit www.microchip.com/EdgeAI 
