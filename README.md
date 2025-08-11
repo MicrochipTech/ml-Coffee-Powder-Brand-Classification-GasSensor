@@ -1,4 +1,4 @@
-# ml-Coffee-Powder-Classification-GasSensorSmelling the Future of Embedded AI
+# ml-Coffee-Powder-Classification-GasSensor
 What if your coffee machine could sniff out whether you’re brewing a bold French roast, a fruity Ethiopian blend , —or even a counterfeit coffee bean? With machine learning (ML), advanced sensors, and Microchip's low-power embedded platforms, this futuristic idea is already brewing.
 We built a working prototype using the PIC32CX-BZ451 microcontroller and the Bosch BME688 gas sensor, all powered by the MPLAB® Machine Learning Development Suite. The result? A fully embedded, wireless-capable system that can classify coffee aromas in real time, —even flagging imposters.
 ________________________________________
