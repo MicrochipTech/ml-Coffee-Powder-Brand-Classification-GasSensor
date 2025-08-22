@@ -9,7 +9,7 @@ The project highlights how **low-cost sensors** and **TinyML techniques** can be
 ---
 
 ## 🔎 Project Summary
-- **Problem:** Coffee authenticity and quality control is often expensive and requires lab-grade instruments.  
+- **Problem:** Coffee authenticity and quality control are often expensive and require lab-grade instruments.  
 - **Solution:** Use gas sensor readings (VOC signatures) + embedded ML to classify coffee brands in real time.  
 - **Approach:**  
   1. Capture sensor data from different coffee brands.  
@@ -38,13 +38,13 @@ The project highlights how **low-cost sensors** and **TinyML techniques** can be
 - Use **MPLAB Data Collector** to log sensor data.  
 - Import datasets into **ML Model Builder** for training.  
 - **AutoML pipeline** used to find optimal features + model.  
-- Best model achieved **~93% accuracy**, with small memory footprint (<20 KB).  
+- Best model achieved **~97% accuracy**, with small memory footprint (<20 KB).  
 
 ---
 
 ## 🤖 Deployment
 - Exported model as a **Knowledge Pack**.  
-- Integrated into MCU firmware with simple API calls (`init_model()`, `predict()`).  
+- Integrated into MCU firmware with simple API calls (`kb.h`, `kb_model_init()`).  
 - Flashed onto PIC32CX-BZ2 board using MPLAB X IDE.  
 - Real-time predictions streamed to PC via **MPLAB Data Visualizer**.  
 
