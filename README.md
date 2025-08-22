@@ -70,5 +70,5 @@ The project highlights how **low-cost sensors** and **TinyML techniques** can be
 ---
 
 ## 📜 License
-MIT License – free to use, modify, and distribute.  
+Microchip Technology Inc License – free to use, modify, and distribute.  
 
