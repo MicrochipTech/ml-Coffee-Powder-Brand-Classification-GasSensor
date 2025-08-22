@@ -50,13 +50,6 @@ The project highlights how **low-cost sensors** and **TinyML techniques** can be
 
 ---
 
-## 🎥 Demo Workflow
-
-
-*(Insert block diagram or screenshot of live MPLAB Visualizer output)*  
-
----
-
 ## 🌟 Key Features
 - Fully embedded ML workflow (no cloud dependency).  
 - Works on **resource-constrained MCUs**.  
