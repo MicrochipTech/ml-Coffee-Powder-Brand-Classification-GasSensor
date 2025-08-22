@@ -28,7 +28,7 @@ The project highlights how **low-cost sensors** and **TinyML techniques** can be
 ---
 
 ## 📂 Repository Contents
-
+'''
 ├── firmware/
 │ ├── sensor_node/ # Firmware for data collection setup with BME688
 │ ├── host_node/ # Firmware for USB host board
@@ -36,7 +36,7 @@ The project highlights how **low-cost sensors** and **TinyML techniques** can be
 ├── user_guide/ # PDF guide (detailed setup, usage, ML workflow)
 │
 ├── README.md # Project overview & documentation
-
+'''
 ---
 
 ## 📊 Data Collection & Training
