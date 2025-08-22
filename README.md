@@ -10,7 +10,7 @@ The project highlights how **low-cost sensors** and **TinyML techniques** can be
 
 ## 🔎 Project Summary
 - **Problem:** Coffee authenticity and quality control are often expensive and require lab-grade instruments.  
-- **Solution:** Use gas sensor readings (VOC signatures) + embedded ML to classify coffee brands in real time.  
+- **Solution:** Use gas sensor readings (VOC/VSC, carbon monoxide, hydrogen signatures) + embedded ML to classify coffee brands in real time.  
 - **Approach:**  
   1. Capture sensor data from different coffee brands.  
   2. Train an ML classifier using Microchip’s MPLAB ML Development Suite.  
